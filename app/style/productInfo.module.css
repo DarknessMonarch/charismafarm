@@ -1,0 +1,47 @@
+@media screen {
+  .productinfo {
+    gap: 30px;
+    display: flex;
+    margin: 0 auto;
+    padding: 10px;
+    flex-direction: column;
+    max-width: var(--app-max-width);
+  }
+
+  .productnavinfo {
+    gap: 10px;
+    padding: 5px;
+    display: flex;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+  }
+
+  .productNavButton {
+    height: 100%;
+    width: 120px;
+    border-radius: 5px;
+    padding: 10px 20px;
+  }
+
+  .active {
+    color: var(--background-color);
+    background-color: var(--secondary-color);
+  }
+  .productContent {
+    min-height: 100px;
+  }
+
+  .productEmptyInfo {
+    height: 100%;
+  }
+}
+
+@media only screen and (min-width: 48em) {
+
+  .productinfo {
+    padding: 0;
+  }
+}
+
+@media only screen and (min-width: 91em) {
+}

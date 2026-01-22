@@ -1,0 +1,128 @@
+@media screen {
+  .Categorycontainer {
+    gap: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .CategoryHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .CategoryHeader h1 {
+    font-size: 1.2rem;
+  }
+
+  .CategoryController {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .navButton {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: 1px solid var(--secondary-color);
+  }
+
+  .navBtnIcon {
+    font-size: 24px;
+    color: var(--secondary-color);
+  }
+
+  .navButton.disabled {
+    border: 1px solid var(--warm-gray);
+  }
+
+  .navButton.disabled .navBtnIcon {
+    color: var(--warm-gray);
+  }
+
+  .navButton:hover {
+    border: 1px solid var(--secondary-color);
+    background-color: var(--secondary-color);
+  }
+
+  .navButton:hover .navBtnIcon {
+    color: var(--background-color);
+  }
+
+  .categoriesGrid {
+    gap: 20px;
+    display: flex;
+    padding: 20px 0;
+    overflow: hidden;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  .categoryImageContainer {
+    gap: 10px;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .categoryWrapperImage {
+    display: flex;
+    padding: 10px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light-background-color);
+  }
+
+  .categoryWrapperImageLoading {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    padding: 10px;
+    border-radius: 50%;
+  }
+
+  .categoryImage {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+
+  .categoryImageContainer h3 {
+    font-size: 0.9rem;
+    transition: all 0.5s ease;
+    color: var(--warm-gray);
+    text-transform: capitalize;
+  }
+
+  .categoryImageContainer:hover h3 {
+    color: var(--secondary-color);
+    text-decoration: underline;
+  }
+}
+
+/* iPad and tablet styles */
+@media only screen and (min-width: 48em) {
+}
+
+/* iPad Pro screens & laptop */
+@media only screen and (min-width: 49em) and (max-width: 64em) {
+}
+
+/* Large screens: Desktop and 4k screens */
+@media only screen and (min-width: 64.063em) and (max-width: 90em) {
+}
+
+/* 5k screens and above */
+@media only screen and (min-width: 91em) {
+}

@@ -1,0 +1,393 @@
+@media screen {
+  .footer {
+    width: 100%;
+    margin-top: 20px;
+    background-color: var(--background-color);
+  }
+
+  .newsletter {
+    background-color: var(--tertiary-light-color);
+    max-width: var(--app-max-width);
+    justify-content: space-between;
+    flex-direction: column;
+    border-radius: 15px;
+    align-items: center;
+    margin: 0 auto;
+    display: flex;
+    padding: 20px;
+    width: 95%;
+    gap: 20px;
+  }
+
+  .newsletterText {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .newsletterText h3 {
+    font-size: 1.4rem;
+  }
+
+  .newsletterText p {
+    font-size: 1rem;
+    color: var(--primary-color);
+    font-weight: var(--font-weight-light);
+  }
+
+  .newsletterForm {
+    gap: 10px;
+    width: 100%;
+    height: 50px;
+    display: flex;
+  }
+
+  .newsletterInput {
+    width: 100%;
+    border: none;
+    display: flex;
+    height: 100%;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 15px;
+    color: var(--primary-color);
+    background-color: var(--background-color);
+  }
+
+  .newsletterInput::placeholder {
+    color: var(--warm-gray);
+  }
+
+  .subscribeBtn {
+    height: 100%;
+    padding: 10px 20px;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    color: var(--background-color);
+    background: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+  }
+
+  .subscribeBtn:hover {
+    border: 1px solid var(--background-color);
+  }
+
+  .footerContent {
+    width: 100%;
+    padding: 40px 10px;
+    margin: 0 auto;
+  }
+
+  .footerGrid {
+    gap: 40px;
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: var(--app-max-width);
+  }
+
+  .footerSection {
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footerSection h4 {
+    text-decoration: underline;
+    color: var(--primary-color);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  /* Contact Info */
+  .contactInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .address,
+  .phone,
+  .email {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .address span,
+  .phone span,
+  .email span {
+    font-size: var(--font-size-lg);
+    min-width: 20px;
+  }
+
+  .contactInfo p {
+    color: var(--primary-color);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+  }
+
+  /* Social Icons */
+  .socialIcons {
+    display: flex;
+    gap: 10px;
+  }
+
+  .socialIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background-color: var(--light-gray);
+    color: var(--primary-color);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .socialIcon:hover {
+    background-color: var(--secondary-color);
+    color: var(--light-color);
+    transform: translateY(-2px);
+  }
+
+  .footerLinksContainer {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footerLink {
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+    font-size: var(--font-size-sm);
+  }
+
+  .footerLink:hover {
+    color: var(--secondary-color);
+  }
+
+  .appButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .appButton {
+    gap: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    color: var(--light-color);
+    transition: all 0.3s ease;
+    background-color: var(--primary-color);
+    border-radius: var(--radius-sm);
+  }
+
+  .appButton:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+  }
+
+
+  .appIcon {
+    font-size:30px;
+    
+  }
+
+
+  .appButton div {
+    text-align: left;
+  }
+
+  .appButton div span {
+    font-size: var(--font-size-xs);
+    display: block;
+    opacity: 0.8;
+  }
+
+  .appButton div strong {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .footerBottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--light-background-color);
+    padding: 10px;
+    width: 100%;
+  }
+
+  .footerBottomContent {
+    gap: 20px;
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    flex-direction: column;
+    max-width: var(--app-max-width);
+
+  }
+
+  .footerBottomContent p {
+    color: var(--warm-gray);
+    font-size: var(--font-size-sm);
+    text-align: center;
+  }
+
+  .paymentMethods {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+
+  .paymentIcons {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .paymentIcon {
+    height: 30px;
+    object-fit: contain;
+  }
+}
+
+/* Responsive breakpoints - Updated to match home CSS exactly */
+@media only screen and (min-width: 48em) {
+  .footer {
+    padding: 0;
+  }
+
+  .newsletter {
+    width: 100%;
+    padding: 30px;
+    margin: 0 auto;
+    flex-direction: row;
+  }
+
+  .newsletterForm {
+    gap: 10px;
+    display: flex;
+    max-width: 400px;
+  }
+
+  .footerContent {
+    padding: 60px 40px;
+  }
+
+  .footerGrid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+
+  .footerSection {
+    flex: 1;
+    min-width: 250px;
+  }
+
+  .appButtons {
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  .footerBottomContent {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .paymentMethods {
+    flex-direction: row;
+    gap: 15px;
+  }
+}
+
+/* iPad Pro screens & laptop - Updated to match home CSS */
+@media only screen and (min-width: 49em) and (max-width: 64em) {
+
+  .footerGrid {
+    justify-content: space-between;
+  }
+
+  .footerSection {
+    flex: 1;
+    min-width: 200px;
+  }
+
+
+}
+
+/* Large screens: Desktop - Updated to match home CSS */
+@media only screen and (min-width: 64.063em) and (max-width: 90em) {
+  .newsletter {
+    transition: all 0.3s ease;
+  }
+
+  .footerGrid {
+    justify-content: space-between;
+    transition: all 0.3s ease;
+  }
+
+  .footerSection {
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .appButtons {
+    flex-direction: column;
+  }
+
+  .footerBottomContent {
+    transition: all 0.3s ease;
+  }
+}
+
+/* 5k screens and above - Updated to match home CSS */
+@media only screen and (min-width: 91em) {
+  .newsletter {
+    transition: all 0.3s ease;
+  }
+
+  .footerGrid {
+    justify-content: space-between;
+    transition: all 0.3s ease;
+  }
+
+  .footerBottomContent {
+    transition: all 0.3s ease;
+  }
+
+  .footerSection:first-child {
+    flex: 2;
+  }
+
+  .footerSection:last-child {
+    flex: 1.5;
+  }
+}
+
+/* Accessibility - Added to match home CSS */
+@media (prefers-reduced-motion: reduce) {
+  .newsletter,
+  .footerGrid,
+  .footerSection,
+  .socialIcon,
+  .appButton,
+  .subscribeBtn {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
