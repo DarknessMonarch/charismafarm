@@ -3,7 +3,7 @@ async function getProductUrls() {
     const baseUrl =
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000"
-        : (process.env.NEXT_PUBLIC_API_URL || "https://rukihealth.swiftsyn.com");
+        : (process.env.NEXT_PUBLIC_API_URL || "https://charismafarms.swiftsyn.com");
 
     const apiUrl = `${baseUrl}/api/products/sitemap`;
 
@@ -39,7 +39,7 @@ async function getProductUrls() {
 }
 
 export default async function sitemap() {
-  const baseUrl = "https://rukihealth.swiftsyn.com";
+  const baseUrl = "https://charismafarms.swiftsyn.com";
 
   // Main pages
   const mainRoutes = [

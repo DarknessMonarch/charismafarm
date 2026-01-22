@@ -22,11 +22,11 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
 });
 
-const SITE_URL = "https://charismafarm.com";
+const SITE_URL = "https://charismafarms.swiftsyn.com";
 const BANNER_URL = "/assets/banner.png";
 
 export const viewport = {
-  themeColor: "#7CB73F",
+  themeColor: "#3bc24e",
 };
 
 export const metadata = {
@@ -216,10 +216,10 @@ export default function RootLayout({ children }) {
           richColors={true}
           toastOptions={{
             style: {
-              background: "#7CB73F",
+              background: "#3bc24e",
               color: "#ffffff",
               borderRadius: "15px",
-              border: "1px solid #7CB73F",
+              border: "1px solid #3bc24e",
             },
           }}
         />

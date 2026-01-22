@@ -1,14 +1,14 @@
 export default function manifest() {
   return {
-    name: 'RukiHealth',
-    short_name: 'RukiHealth',
-    description: 'RukiHealth – Your trusted online shop for health supplements, herbal products, skincare, and wellness essentials.',
+    name: 'CharismaFarm',
+    short_name: 'CharismaFarm',
+    description: 'CharismaFarm – Your trusted source for fresh organic farm products including honey, poultry, vegetables, and goat products.',
     start_url: '/',
     scope: '/',
     display: 'standalone',
     orientation: 'portrait',
     background_color: '#ffffff',
-    theme_color: '#37b44c',
+    theme_color: '#3bc24e',
     categories: [
       'health',
       'wellness',
