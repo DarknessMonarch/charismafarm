@@ -210,7 +210,8 @@ const useNavLinks = () => {
   const NAV_LINKS = useMemo(
     () => [
       { href: "/", label: "Home", exact: true },
-      { href: "/about", label: "About Us", matchPattern: "/about" },
+      { href: "/products", label: "Shop", matchPattern: "/products" },
+      { href: "/about", label: "About", matchPattern: "/about" },
       {
         href: "/categories",
         label: "Categories",
@@ -222,28 +223,15 @@ const useNavLinks = () => {
         title: "Shop by Category",
         description:
           "Browse our farm-fresh products by category. From pure honey to fresh vegetables, find exactly what you need.",
-        image:
-          "https://cdn.pixabay.com/photo/2016/08/11/08/04/vegetables-1584999_640.jpg",
+        image: "/assets/images/categories/vegetables.jpg",
         imageTitle: "Farm Fresh Categories",
         imageDescription:
           "Honey, poultry, vegetables, and goat products - all organically raised on our farm.",
       },
       {
-        href: "/products",
-        label: "Products",
-        hasDropdown: true,
-        dropdown: navProducts.map((product) => ({
-          name: product.name,
-          href: `/products/${product._id}`,
-        })),
-        title: "Featured Products",
-        description:
-          "Discover our most popular farm products. Fresh, organic, and delivered with care.",
-        image:
-          "https://cdn.pixabay.com/photo/2017/06/02/18/24/honey-2367429_640.jpg",
-        imageTitle: "Best-Selling Farm Products",
-        imageDescription:
-          "Shop our customer favorites - pure honey, free-range eggs, and fresh produce.",
+        href: "/blog",
+        label: "Blog",
+        hasDropdown: false,
       },
       { href: "/contact", label: "Contact Us" },
     ],
@@ -651,22 +639,22 @@ const SearchSection = ({ isMobile, categoryOptions }) => {
     router.push(`/products?${params.toString()}`);
   };
 
-  if (isMobile) return null;
-
   return (
-    <form onSubmit={handleSearch} className={styles.searchContainer}>
-      <div className={styles.categorySelector}>
-        <Dropdown
-          options={categoryOptions}
-          onSelect={handleCategorySelect}
-          dropPlaceHolder="Select Category"
-          value={selectedCategory}
-        />
-      </div>
+    <form onSubmit={handleSearch} className={`${styles.searchContainer} ${isMobile ? styles.mobileSearch : ''}`}>
+      {!isMobile && (
+        <div className={styles.categorySelector}>
+          <Dropdown
+            options={categoryOptions}
+            onSelect={handleCategorySelect}
+            dropPlaceHolder="Select Category"
+            value={selectedCategory}
+          />
+        </div>
+      )}
       <div className={styles.searchInputContainer}>
         <input
           type="text"
-          placeholder="I am shopping for..."
+          placeholder={isMobile ? "Search products..." : "I am shopping for..."}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className={styles.searchInput}
@@ -987,6 +975,15 @@ const NavbarContent = () => {
             />
           </div>
         </div>
+
+        {isMobile && (
+          <div className={styles.mobileSearchWrapper}>
+            <SearchSection
+              isMobile={isMobile}
+              categoryOptions={CATEGORY_OPTIONS}
+            />
+          </div>
+        )}
 
         <div className={styles.secondaryNav}>
           {isMobile && (

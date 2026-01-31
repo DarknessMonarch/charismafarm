@@ -1,17 +1,16 @@
 import Image from "next/image";
 import styles from "@/app/style/loadinglogo.module.css";
-import AnimatedLogo from "@/public/assets/logo.gif";
+import Logo from "@/public/assets/logo.png";
 
 export default function Loading() {
   return (
     <div className={styles.loadingComponent}>
       <Image
         className={styles.loadingImg}
-        src={AnimatedLogo}
-        alt="Animated Logo "
+        src={Logo}
+        alt="CharismaFarm Logo"
         height={300}
         loading="lazy"
-        optimize="false"
       />
     </div>
   );

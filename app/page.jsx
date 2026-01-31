@@ -16,46 +16,46 @@ import { FaShippingFast as ShippingIcon } from "react-icons/fa";
 import { PiPlantFill as OrganicIcon } from "react-icons/pi";
 import { RiSecurePaymentLine as ShieldIcon } from "react-icons/ri";
 import { MdStar as StarIcon, MdStarHalf as StarHalfIcon } from "react-icons/md";
-import { FiShoppingCart as CartIcon } from "react-icons/fi";
+import { FiShoppingCart as CartIcon, FiEye as EyeIcon } from "react-icons/fi";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { useCartStore } from "@/app/store/Cart";
+import QuickViewModal from "@/app/components/QuickViewModal";
 
-// Alternative image sources - Using Pexels and Unsplash which are more permissive
+// Local image assets - Add your images to /public/assets/images/
 const IMAGES = {
-  hero: "https://images.unsplash.com/photo-1524024973431-2ad916746881?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z29hdHxlbnwwfHwwfHx8MA%3D%3D",
-  heroLeaf1: "https://images.unsplash.com/photo-1540420828647-f822e8c8c6a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-  heroLeaf2: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&auto=format&fit=crop&w-600&q=80",
+  // Hero section - add hero.jpg to /public/assets/images/
+  hero: "/assets/images/hero.jpg",
 
-  // Category default images - Using Pexels
-  honey: "https://images.pexels.com/photos/547263/pexels-photo-547263.jpeg?auto=compress&cs=tinysrgb&w=600",
-  poultry: "https://images.pexels.com/photos/162712/egg-white-food-protein-162712.jpeg?auto=compress&cs=tinysrgb&w=600",
-  vegetables: "https://images.pexels.com/photos/143133/pexels-photo-143133.jpeg?auto=compress&cs=tinysrgb&w=600",
-  goat: "https://images.unsplash.com/photo-1588466585717-f8041aec7875?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  dairy: "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y293fGVufDB8fDB8fHww",
+  // Category default images - add to /public/assets/images/categories/
+  honey: "/assets/images/categories/honey.jpg",
+  poultry: "/assets/images/categories/poultry.jpg",
+  vegetables: "/assets/images/categories/vegetables.jpg",
+  goat: "/assets/images/categories/goat.jpg",
+  dairy: "/assets/images/categories/dairy.jpg",
 
-  // Promo banners
-  promoBanner1: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cG91bHRyeXxlbnwwfHwwfHx8MA%3D%3D",
-  promoBanner2: "https://images.unsplash.com/photo-1540420828647-f822e8c8c6a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-  promoBanner3: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+  // Promo banners - add to /public/assets/images/banners/
+  promoBanner1: "/assets/images/banners/promo-honey.jpg",
+  promoBanner2: "/assets/images/banners/promo-vegetables.jpg",
+  promoBanner3: "/assets/images/banners/promo-poultry.jpg",
 
-  // Healthy life section
-  healthyLife: "https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+  // Healthy life section - add to /public/assets/images/
+  healthyLife: "/assets/images/healthy-life.jpg",
 
-  // Summer sale banner
-  saleBanner: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+  // Summer sale banner - add to /public/assets/images/banners/
+  saleBanner: "/assets/images/banners/sale-banner.jpg",
 
-  // Blog default images
-  blog1: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cG91bHRyeXxlbnwwfHwwfHx8MA%3D%3D",
-  blog2: "https://plus.unsplash.com/premium_photo-1675798983878-604c09f6d154?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dmVnZXRhYmxlc3xlbnwwfHwwfHx8MA%3D%3D",
-  blog3: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+  // Blog default images - populated from server via dashboard
+  blog1: "/assets/images/blog/blog-placeholder.jpg",
+  blog2: "/assets/images/blog/blog-placeholder.jpg",
+  blog3: "/assets/images/blog/blog-placeholder.jpg",
 
-  // Default testimonial avatar - Using Unsplash portraits
-  avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
+  // Default testimonial avatar - populated from server via dashboard
+  avatar: "/assets/images/avatar-placeholder.jpg",
 
   // Default product image
-  defaultProduct: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+  defaultProduct: "/assets/images/product-placeholder.jpg",
 
-  // Decorative elements - using SVG patterns or emoji
+  // Decorative elements
   leafPattern: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%234CAF50' d='M50,20 C60,10 80,15 80,30 C80,45 60,55 50,70 C40,55 20,45 20,30 C20,15 40,10 50,20 Z'/%3E%3C/svg%3E",
 };
 
@@ -94,7 +94,7 @@ const DEFAULT_CATEGORIES = [
   { _id: "dairy", name: "Dairy", slug: "dairy", image: IMAGES.dairy },
 ];
 
-// Default testimonials with Unsplash avatars
+// Default testimonials - populated from server via dashboard
 const DEFAULT_TESTIMONIALS = [
   {
     _id: "1",
@@ -102,7 +102,7 @@ const DEFAULT_TESTIMONIALS = [
     role: "Regular Customer",
     comment: "CharismaFarm delivers the freshest vegetables I've ever bought. The quality is exceptional and their delivery is always on time. I highly recommend them to anyone looking for organic produce!",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1494790108755-2616b786d4d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
+    image: IMAGES.avatar,
   },
   {
     _id: "2",
@@ -110,7 +110,7 @@ const DEFAULT_TESTIMONIALS = [
     role: "Home Chef",
     comment: "The honey from CharismaFarm is pure and delicious. You can taste the difference from store-bought products. My family loves it!",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
+    image: IMAGES.avatar,
   },
   {
     _id: "3",
@@ -118,7 +118,7 @@ const DEFAULT_TESTIMONIALS = [
     role: "Health Enthusiast",
     comment: "I've been ordering eggs and vegetables from CharismaFarm for months. Everything is fresh, organic, and fairly priced. Great customer service too!",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
+    image: IMAGES.avatar,
   },
 ];
 
@@ -163,6 +163,8 @@ export default function Home() {
   const [testimonialIndex, setTestimonialIndex] = useState(0);
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [imageErrors, setImageErrors] = useState({});
+  const [quickViewProduct, setQuickViewProduct] = useState(null);
+  const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
 
   const Features = [
     { id: 1, icon: ShippingIcon, title: "Free Delivery", description: "Free shipping on orders over Ksh 5000" },
@@ -190,20 +192,35 @@ export default function Home() {
     fetchData();
   }, []);
 
-  const handleAddToCart = async (e, product) => {
-    e.stopPropagation();
+  const handleAddToCart = async (e, product, quantity = 1) => {
+    if (e) e.stopPropagation();
     if (!isAuth || !emailVerified) {
       toast.error("Please login to add items to cart");
       router.push("/authentication/login");
       return;
     }
-    const result = await addToCart(product._id, 1);
+    const result = await addToCart(product._id, quantity);
     if (result.success) {
       toast.success("Added to cart");
       openDrawer();
     } else {
       toast.error(result.message);
     }
+  };
+
+  const handleQuickView = (e, product) => {
+    e.stopPropagation();
+    setQuickViewProduct(product);
+    setIsQuickViewOpen(true);
+  };
+
+  const handleCloseQuickView = () => {
+    setIsQuickViewOpen(false);
+    setQuickViewProduct(null);
+  };
+
+  const handleQuickViewAddToCart = async (product, quantity) => {
+    await handleAddToCart(null, product, quantity);
   };
 
   const handleProductClick = (productId) => {
@@ -313,7 +330,7 @@ export default function Home() {
         <div className={styles.heroImageWrapper}>
           <FallbackImage
             src={IMAGES.hero}
-            fallbackSrc="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+            fallbackSrc={IMAGES.defaultProduct}
             alt="Fresh farm products"
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
@@ -470,9 +487,14 @@ export default function Home() {
                     className={styles.productImage}
                     onError={() => handleImgError(product._id)}
                   />
-                  <button className={styles.addToCartBtn} onClick={(e) => handleAddToCart(e, product)}>
-                    <CartIcon />
-                  </button>
+                  <div className={styles.productActions}>
+                    <button className={styles.quickViewBtn} onClick={(e) => handleQuickView(e, product)} title="Quick View">
+                      <EyeIcon />
+                    </button>
+                    <button className={styles.addToCartBtn} onClick={(e) => handleAddToCart(e, product)} title="Add to Cart">
+                      <CartIcon />
+                    </button>
+                  </div>
                 </div>
                 <div className={styles.productInfo}>
                   <span className={styles.productCategory}>{product.category}</span>
@@ -673,6 +695,15 @@ export default function Home() {
           )}
         </div>
       </section>
+
+      {/* Quick View Modal */}
+      <QuickViewModal
+        product={quickViewProduct}
+        isOpen={isQuickViewOpen}
+        onClose={handleCloseQuickView}
+        onAddToCart={handleQuickViewAddToCart}
+        isAuth={isAuth && emailVerified}
+      />
     </main>
   );
 }

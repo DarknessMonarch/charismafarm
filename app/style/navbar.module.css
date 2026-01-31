@@ -355,6 +355,27 @@
     color: var(--warm-gray);
   }
 
+  .mobileSearchWrapper {
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .mobileSearch {
+    width: 100%;
+    padding: 8px 12px;
+  }
+
+  .mobileSearch .searchInputContainer {
+    width: 100%;
+  }
+
+  .mobileSearch .searchInput {
+    border-left: none;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
   .rightSection {
     gap: 20px;
     display: flex;
@@ -750,6 +771,10 @@
 
 /* Tablet & Small Laptop Screens - 768px+ (48em+) */
 @media only screen and (min-width: 48em) {
+  .mobileSearchWrapper {
+    display: none;
+  }
+
   .navbarWrapper {
     display: flex;
     align-items: center;

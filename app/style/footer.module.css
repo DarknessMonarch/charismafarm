@@ -155,6 +155,24 @@
     transform: translateY(-2px);
   }
 
+  .whatsappIcon {
+    background-color: #25D366;
+    color: var(--light-color);
+  }
+
+  .whatsappIcon:hover {
+    background-color: #128C7E;
+  }
+
+  .locationIcon,
+  .phoneIcon,
+  .emailIcon {
+    font-size: 20px;
+    color: var(--secondary-color);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
   .footerLinksContainer {
     gap: 10px;
     display: flex;

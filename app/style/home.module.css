@@ -459,30 +459,42 @@
     font-size: 0.9rem;
   }
 
-  .addToCartBtn {
+  .productActions {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: var(--primary-color);
-    color: var(--light-color);
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
     opacity: 0;
     transform: translateY(10px);
     transition: all 0.3s ease;
   }
 
-  .productCard:hover .addToCartBtn {
+  .productCard:hover .productActions {
     opacity: 1;
     transform: translateY(0);
   }
 
+  .quickViewBtn,
+  .addToCartBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--light-color);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+  }
+
+  .quickViewBtn:hover,
   .addToCartBtn:hover {
     background-color: var(--secondary-color);
+    color: var(--light-color);
     transform: scale(1.1);
   }
 

@@ -1,0 +1,218 @@
+@media screen {
+  .container {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 15px;
+    background-color: var(--section-background);
+  }
+
+  .card {
+    width: 100%;
+    max-width: 500px;
+    background-color: var(--background-color);
+    border-radius: var(--radius-md);
+    padding: 30px 20px;
+    box-shadow: var(--shadow-medium);
+  }
+
+  .loadingState,
+  .errorState,
+  .successState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .loadingState h2,
+  .errorState h2,
+  .successState h2 {
+    font-size: var(--font-size-xl);
+    color: var(--primary-color);
+  }
+
+  .loadingState p,
+  .errorState p,
+  .successState p {
+    font-size: var(--font-size-sm);
+    color: var(--warm-gray);
+    max-width: 300px;
+    line-height: 1.5;
+  }
+
+  .successIcon {
+    font-size: 80px;
+    color: var(--secondary-color);
+  }
+
+  .errorIcon {
+    font-size: 80px;
+    color: #dc3545;
+  }
+
+  .orderDetails {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .orderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .orderHeader h3 {
+    font-size: var(--font-size-md);
+    color: var(--primary-color);
+  }
+
+  .orderNumber {
+    font-size: var(--font-size-sm);
+    color: var(--secondary-color);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .detailRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: var(--font-size-sm);
+  }
+
+  .detailRow span:first-child {
+    color: var(--warm-gray);
+  }
+
+  .detailRow span:last-child {
+    color: var(--primary-color);
+    font-weight: var(--font-weight-medium);
+    text-align: right;
+    max-width: 60%;
+  }
+
+  .trackingNumber {
+    font-family: monospace;
+    background-color: var(--tertiary-light-color);
+    padding: 4px 8px;
+    border-radius: var(--radius-xs);
+    font-size: var(--font-size-xs) !important;
+  }
+
+  .status {
+    text-transform: capitalize;
+    background-color: var(--tertiary-light-color);
+    color: var(--secondary-color) !important;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: var(--font-size-xs) !important;
+  }
+
+  .orderSummary {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--section-background);
+    border-radius: var(--radius-sm);
+  }
+
+  .summaryRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: var(--font-size-sm);
+    color: var(--primary-color);
+  }
+
+  .summaryRow.total {
+    padding-top: 12px;
+    margin-top: 8px;
+    border-top: 1px solid var(--border-color);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .summaryRow.total span:last-child {
+    color: var(--secondary-color);
+  }
+
+  .receiptLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+    padding: 12px;
+    background-color: var(--tertiary-light-color);
+    color: var(--secondary-color);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    transition: all 0.2s ease;
+  }
+
+  .receiptLink:hover {
+    background-color: var(--secondary-color);
+    color: var(--light-color);
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 24px;
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+
+  .primaryBtn {
+    background-color: var(--secondary-color);
+    color: var(--light-color);
+  }
+
+  .primaryBtn:hover {
+    background-color: var(--primary-color);
+  }
+
+  .secondaryBtn {
+    background-color: var(--light-gray);
+    color: var(--primary-color);
+  }
+
+  .secondaryBtn:hover {
+    background-color: var(--border-color);
+  }
+}
+
+@media only screen and (min-width: 48em) {
+  .card {
+    padding: 40px;
+  }
+
+  .actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    flex: 1;
+    max-width: 200px;
+  }
+}

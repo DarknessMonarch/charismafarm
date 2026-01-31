@@ -16,15 +16,15 @@ import {
   IoClose as CloseIcon,
 } from "react-icons/io5";
 
-export default function CartComponent({ delivery = 50 }) {
+export default function CartComponent() {
   const router = useRouter()
-  const { 
+  const {
     isAuth,
     cart,
     cartLoading,
     getCart,
-    updateCartItemQuantity, // Add this method from your ecommerce store
-    removeCartItem, // Add this method from your ecommerce store
+    updateCartItem,
+    removeFromCart,
   } = useEcommerceStore()
 
   const {
@@ -46,15 +46,17 @@ export default function CartComponent({ delivery = 50 }) {
 
   const handleUpdateQuantity = async (itemId, newQuantity) => {
     if (newQuantity < 1) return
-    
+
     setLoading(true)
     try {
-      await updateCartItemQuantity(itemId, newQuantity)
-      await getCart() // Refresh cart from API
-      toast.success("Quantity updated successfully!")
+      const result = await updateCartItem(itemId, newQuantity)
+      if (result.success) {
+        toast.success("Quantity updated")
+      } else {
+        toast.error(result.message || "Failed to update quantity")
+      }
     } catch (error) {
       toast.error("Failed to update quantity")
-      console.error(error)
     } finally {
       setLoading(false)
     }
@@ -63,12 +65,14 @@ export default function CartComponent({ delivery = 50 }) {
   const handleRemoveItem = async (itemId) => {
     setLoading(true)
     try {
-      await removeCartItem(itemId)
-      await getCart() // Refresh cart from API
-      toast.success("Item removed from cart!")
+      const result = await removeFromCart(itemId)
+      if (result.success) {
+        toast.success("Item removed from cart")
+      } else {
+        toast.error(result.message || "Failed to remove item")
+      }
     } catch (error) {
       toast.error("Failed to remove item")
-      console.error(error)
     } finally {
       setLoading(false)
     }
@@ -85,9 +89,7 @@ export default function CartComponent({ delivery = 50 }) {
   }
 
   const cartItems = cart?.items || []
-  const subtotal = getSubtotal()
-  const deliveryFee = getDeliveryFee(delivery)
-  const total = getTotal(delivery)
+  const subtotal = cart?.totalAmount || 0
 
   if (cartLoading && cartItems.length === 0) {
     return (
@@ -139,16 +141,16 @@ export default function CartComponent({ delivery = 50 }) {
         <div className={styles.checkoutContainer}>
           <div className={styles.checkoutSummary}>
             <div className={styles.checkinfo}>
-              <h4>Delivery Fee ({cartItems.length} items):</h4>
-              <span>Ksh {deliveryFee.toFixed(2)}</span>
-            </div>
-            <div className={styles.checkinfo}>
-              <h4>Subtotal:</h4>
+              <h4>Items ({cartItems.length}):</h4>
               <span>Ksh {subtotal.toFixed(2)}</span>
             </div>
+            <div className={styles.checkinfo}>
+              <h4>Delivery:</h4>
+              <span>Calculated at checkout</span>
+            </div>
             <div className={`${styles.checkinfo} ${styles.total}`}>
-              <h3>Total:</h3>
-              <h3>Ksh {total.toFixed(2)}</h3>
+              <h3>Subtotal:</h3>
+              <h3>Ksh {subtotal.toFixed(2)}</h3>
             </div>
           </div>
           

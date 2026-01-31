@@ -4,6 +4,7 @@ import Script from "next/script";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import CartDrawer from "@/app/components/CartDrawer";
+import WhatsAppButton from "@/app/components/WhatsAppButton";
 import styles from "@/app/style/applayout.module.css";
 import { Inter, Playfair_Display } from "next/font/google";
 import { StoreInitializer } from "@/app/components/StoreInitializer";
@@ -122,7 +123,7 @@ const organizationSchema = {
     "@type": "ContactPoint",
     email: "info@charismafarm.com",
     contactType: "Customer Support",
-    telephone: "+254700000000",
+    telephone: "+254746033465",
     availableLanguage: "English",
   },
 
@@ -228,6 +229,7 @@ export default function RootLayout({ children }) {
           <CartDrawer />
           <StoreInitializer>{children}</StoreInitializer>
           <Footer />
+          <WhatsAppButton />
         </div>
       </body>
     </html>
