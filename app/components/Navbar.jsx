@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { useCartStore } from "@/app/store/Cart";
 import Logo from "@/public/assets/logo.png";
 import { useEcommerceStore } from "@/app/store/ecommerceStore";
+import { useCategoryStore } from "@/app/store/categoryStore";
 import Dropdown from "@/app/components/Dropdown";
 import styles from "@/app/style/navbar.module.css";
 import { useDrawerStore } from "@/app/store/Drawer";
@@ -125,7 +126,7 @@ const useImageUpload = (updateProfileImage) => {
         setIsUploadingImage(false);
       }
     },
-    [updateProfileImage, validateFile]
+    [updateProfileImage, validateFile],
   );
 
   const handleProfileImageClick = useCallback(() => {
@@ -141,7 +142,7 @@ const useImageUpload = (updateProfileImage) => {
         uploadImage(file);
       }
     },
-    [uploadImage]
+    [uploadImage],
   );
 
   const handleMouseEnter = useCallback(() => {
@@ -164,48 +165,40 @@ const useImageUpload = (updateProfileImage) => {
 };
 
 const useNavLinks = () => {
-  const { products, getAllProducts } = useEcommerceStore();
-  const [navProducts, setNavProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [isLoadingProducts, setIsLoadingProducts] = useState(true);
+  const { categories, fetchCategories } = useCategoryStore();
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoadingProducts(true);
+    const loadCategories = async () => {
+      setIsLoadingCategories(true);
       try {
-        const result = await getAllProducts({ limit: 100 });
-        if (result.success && result.data.products) {
-          const fetchedProducts = result.data.products;
-
-          setNavProducts(fetchedProducts.slice(0, 4));
-          const uniqueCategories = [
-            ...new Set(
-              fetchedProducts.map((product) => product.category).filter(Boolean)
-            ),
-          ];
-
-          const formattedCategories = uniqueCategories.map((cat) => ({
-            id: cat,
-            name: cat.charAt(0).toUpperCase() + cat.slice(1),
-            value: cat,
-          }));
-
-          setCategories(formattedCategories);
-        }
+        await fetchCategories();
       } catch (error) {
-        console.error("Error fetching nav data:", error);
+        console.error("Error fetching categories:", error);
       } finally {
-        setIsLoadingProducts(false);
+        setIsLoadingCategories(false);
       }
     };
 
-    fetchData();
-  }, [getAllProducts]);
+    loadCategories();
+  }, [fetchCategories]);
+
+  const formattedCategories = useMemo(
+    () =>
+      (categories || []).map((cat) => ({
+        id: cat._id,
+        name: cat.name,
+        value: cat.slug,
+      })),
+    [categories],
+  );
 
   const CATEGORY_OPTIONS = useMemo(
-    () => [{ id: "all", name: "All Categories", value: "all" }, ...categories],
-    [categories]
+    () => [{ id: "all", name: "All Categories", value: "all" }, ...formattedCategories],
+    [formattedCategories],
   );
+
+  const firstCategoryImage = categories?.[0]?.image || null;
 
   const NAV_LINKS = useMemo(
     () => [
@@ -216,17 +209,16 @@ const useNavLinks = () => {
         href: "/categories",
         label: "Categories",
         hasDropdown: true,
-        dropdown: categories.map((cat) => ({
-          name: cat.name,
-          href: `/products?category=${cat.value}`,
-        })),
+        dropdown: formattedCategories.length > 0
+          ? formattedCategories.map((cat) => ({
+              name: cat.name,
+              href: `/products?category=${cat.value}`,
+            }))
+          : [{ name: "No categories available", href: "/products" }],
         title: "Shop by Category",
         description:
           "Browse our farm-fresh products by category. From pure honey to fresh vegetables, find exactly what you need.",
-        image: "/assets/images/categories/vegetables.jpg",
-        imageTitle: "Farm Fresh Categories",
-        imageDescription:
-          "Honey, poultry, vegetables, and goat products - all organically raised on our farm.",
+        image: firstCategoryImage,
       },
       {
         href: "/blog",
@@ -235,10 +227,10 @@ const useNavLinks = () => {
       },
       { href: "/contact", label: "Contact Us" },
     ],
-    [navProducts, categories]
+    [formattedCategories, firstCategoryImage],
   );
 
-  return { NAV_LINKS, CATEGORY_OPTIONS, isLoadingProducts };
+  return { NAV_LINKS, CATEGORY_OPTIONS, isLoadingProducts: isLoadingCategories };
 };
 
 const isLinkActive = (pathname, searchParams, link) => {
@@ -542,7 +534,7 @@ const MobileMenuOverlay = ({
           isClosing ? styles.slideOut : styles.slideIn
         }`}
       >
-    <div className={styles.mobileMenuHeader}>
+        <div className={styles.mobileMenuHeader}>
           <div className={styles.logoContainer}>
             <Image
               src={Logo}
@@ -608,7 +600,6 @@ const LogoSection = ({ onLogoClick }) => (
       }}
       style={{ cursor: "pointer" }}
     />
-
   </div>
 );
 
@@ -640,7 +631,10 @@ const SearchSection = ({ isMobile, categoryOptions }) => {
   };
 
   return (
-    <form onSubmit={handleSearch} className={`${styles.searchContainer} ${isMobile ? styles.mobileSearch : ''}`}>
+    <form
+      onSubmit={handleSearch}
+      className={`${styles.searchContainer} ${isMobile ? styles.mobileSearch : ""}`}
+    >
       {!isMobile && (
         <div className={styles.categorySelector}>
           <Dropdown
@@ -773,7 +767,9 @@ const NavbarSkeleton = () => (
   >
     <div className={styles.navbarOffer}>
       <OfferIcon className={styles.offerIcon} aria-hidden="true" />
-      <span className={styles.offerText}>Fresh organic farm products delivered to your door</span>
+      <span className={styles.offerText}>
+        Fresh organic farm products delivered to your door
+      </span>
     </div>
     <div className={styles.navbarContainerWrapper}>
       <div className={styles.navbarContainer}>
@@ -937,7 +933,7 @@ const NavbarContent = () => {
       disabled: isUploadingImage,
       "aria-hidden": true,
     }),
-    [fileInputRef, handleFileChange, isUploadingImage]
+    [fileInputRef, handleFileChange, isUploadingImage],
   );
 
   return (
@@ -951,39 +947,34 @@ const NavbarContent = () => {
       >
         <div className={styles.navbarOffer}>
           <OfferIcon className={styles.offerIcon} aria-hidden="true" />
-          <span className={styles.offerText}>Fresh organic farm products delivered to your door</span>
+          <span className={styles.offerText}>
+            Fresh organic farm products delivered to your door
+          </span>
         </div>
         <div className={styles.navbarContainerWrapper}>
           <div className={styles.navbarContainer}>
-            <LogoSection onLogoClick={handleLogoClick} />
+            {!isMobile && <LogoSection onLogoClick={handleLogoClick} />}
             <SearchSection
               isMobile={isMobile}
               categoryOptions={CATEGORY_OPTIONS}
             />
-            <RightSection
-              isAuth={isAuth}
-              username={username}
-              profileImage={profileImage}
-              onImageClick={handleProfileImageClick}
-              isUploadingImage={isUploadingImage}
-              onLogout={handleLogout}
-              isLoggingOut={isLoggingOut}
-              isMobile={isMobile}
-              showHint={showHint}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            />
+            {!isMobile && (
+              <RightSection
+                isAuth={isAuth}
+                username={username}
+                profileImage={profileImage}
+                onImageClick={handleProfileImageClick}
+                isUploadingImage={isUploadingImage}
+                onLogout={handleLogout}
+                isLoggingOut={isLoggingOut}
+                isMobile={isMobile}
+                showHint={showHint}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              />
+            )}
           </div>
         </div>
-
-        {isMobile && (
-          <div className={styles.mobileSearchWrapper}>
-            <SearchSection
-              isMobile={isMobile}
-              categoryOptions={CATEGORY_OPTIONS}
-            />
-          </div>
-        )}
 
         <div className={styles.secondaryNav}>
           {isMobile && (
@@ -1016,8 +1007,24 @@ const NavbarContent = () => {
               navLinks={NAV_LINKS}
             />
           )}
-
-          <CartSection onCartClick={handleCartClick} />
+          <div className={styles.rightSection}>
+            {isMobile && (
+              <RightSection
+                isAuth={isAuth}
+                username={username}
+                profileImage={profileImage}
+                onImageClick={handleProfileImageClick}
+                isUploadingImage={isUploadingImage}
+                onLogout={handleLogout}
+                isLoggingOut={isLoggingOut}
+                isMobile={isMobile}
+                showHint={showHint}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              />
+            )}
+            <CartSection onCartClick={handleCartClick} />
+          </div>
         </div>
       </nav>
 

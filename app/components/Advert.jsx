@@ -1,31 +1,34 @@
 "use client";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAdvertStore } from "@/app/store/Advert";
 import styles from "@/app/style/advert.module.css";
 
-export default function Advert() {
-  const { adverts, loading, fetchAdverts } = useAdvertStore();
+export default function Advert({ placement = "sidebar" }) {
+  const { advertsByPlacement, loading, fetchAdverts } = useAdvertStore();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [slideTransition, setSlideTransition] = useState(false);
 
   useEffect(() => {
     fetchAdverts();
-  }, [fetchAdverts]);
+  }, []);
+
+  const advert = advertsByPlacement[placement];
+  const items = useMemo(() => advert?.items || [], [advert]);
 
   useEffect(() => {
-    if (adverts.length > 1) {
+    if (items.length > 1) {
       const interval = setInterval(() => {
         setSlideTransition(true);
         setTimeout(() => {
-          setCurrentSlide((prev) => (prev + 1) % adverts.length);
+          setCurrentSlide((prev) => (prev + 1) % items.length);
           setSlideTransition(false);
         }, 250);
       }, 5000);
 
       return () => clearInterval(interval);
     }
-  }, [adverts.length]);
+  }, [items.length]);
 
   const handleSlideChange = (index) => {
     if (index !== currentSlide) {
@@ -37,9 +40,9 @@ export default function Advert() {
     }
   };
 
-  const handleShopNow = (advertLink) => {
-    if (advertLink) {
-      window.location.href = advertLink;
+  const handleShopNow = (link) => {
+    if (link) {
+      window.location.href = link;
     }
   };
 
@@ -47,33 +50,33 @@ export default function Advert() {
     return <div className={`${styles.advertSkeleton} skeleton`}></div>;
   }
 
-  if (adverts.length === 0) {
+  if (!items || items.length === 0) {
     return null;
   }
 
-  const currentAdvert = adverts[currentSlide];
+  const currentItem = items[currentSlide];
 
   return (
     <div className={styles.advertHero}>
       <div className={styles.advertTextSection}>
-        <span>{currentAdvert?.location || "Featured"}</span>
-        <h1>{currentAdvert?.title || "Special Offer"}</h1>
+        <span>{currentItem?.label || "Featured"}</span>
+        <h1>{currentItem?.title || "Special Offer"}</h1>
         <p className={styles.advertDescription}>
-          {currentAdvert?.description}
+          {currentItem?.description}
         </p>
         <button
           className={styles.advertButton}
-          onClick={() => handleShopNow(currentAdvert?.link)}
+          onClick={() => handleShopNow(currentItem?.buttonLink)}
         >
-          Buy Now
+          {currentItem?.buttonText || "Buy Now"}
         </button>
       </div>
 
       <div className={styles.advertImageSection}>
-        {currentAdvert?.image && (
+        {currentItem?.image && (
           <Image
-            src={currentAdvert.image}
-            alt={currentAdvert.title || "Advertisement"}
+            src={currentItem.image}
+            alt={currentItem.title || "Advertisement"}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             quality={100}
@@ -85,9 +88,9 @@ export default function Advert() {
         )}
       </div>
 
-      {adverts.length > 1 && (
+      {items.length > 1 && (
         <div className={styles.advertPagination}>
-          {adverts.map((_, index) => (
+          {items.map((_, index) => (
             <div
               key={index}
               className={`${styles.advertPaginationDot} ${

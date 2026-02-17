@@ -359,6 +359,141 @@
   .receiptBtn:hover {
     background-color: var(--border-color);
   }
+
+  .reviewBtn {
+    background-color: #f59e0b;
+    color: var(--light-color);
+  }
+
+  .reviewBtn:hover {
+    background-color: #d97706;
+  }
+
+  /* Review Modal Styles */
+  .modalOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+  }
+
+  .modalContent {
+    background-color: var(--background-color);
+    border-radius: var(--radius-md);
+    max-width: 450px;
+    width: 100%;
+    padding: 25px;
+    position: relative;
+    box-shadow: var(--shadow-heavy);
+  }
+
+  .modalClose {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--warm-gray);
+    transition: color 0.2s ease;
+  }
+
+  .modalClose:hover {
+    color: var(--primary-color);
+  }
+
+  .modalContent h2 {
+    font-size: var(--font-size-xl);
+    color: var(--primary-color);
+    margin-bottom: 5px;
+  }
+
+  .modalSubtitle {
+    font-size: var(--font-size-sm);
+    color: var(--warm-gray);
+    margin-bottom: 20px;
+  }
+
+  .reviewForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .ratingField label,
+  .commentField label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--primary-color);
+    margin-bottom: 8px;
+  }
+
+  .starRating {
+    display: flex;
+    gap: 5px;
+  }
+
+  .ratingStar {
+    font-size: 32px;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+  }
+
+  .ratingStar:hover {
+    transform: scale(1.1);
+  }
+
+  .starFilled {
+    color: #f59e0b;
+  }
+
+  .starEmpty {
+    color: #d1d5db;
+  }
+
+  .commentField textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
+  }
+
+  .commentField textarea:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+  }
+
+  .submitReviewBtn {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--secondary-color);
+    color: var(--light-color);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .submitReviewBtn:hover:not(:disabled) {
+    background-color: var(--primary-color);
+  }
+
+  .submitReviewBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
 }
 
 @media only screen and (min-width: 48em) {

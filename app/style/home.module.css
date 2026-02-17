@@ -1030,6 +1030,26 @@
     background-color: var(--secondary-color);
     color: var(--light-color);
   }
+
+  .promoBannerSkeleton {
+    min-height: 200px;
+    border-radius: 15px;
+  }
+
+  .healthySectionSkeleton {
+    min-height: 400px;
+    border-radius: 20px;
+  }
+
+  .saleBannerSkeleton {
+    min-height: 300px;
+    border-radius: 20px;
+  }
+
+  .heroSkeleton {
+    min-height: 350px;
+    border-radius: 20px;
+  }
 }
 
 /* Tablet Screens - 768px+ */
