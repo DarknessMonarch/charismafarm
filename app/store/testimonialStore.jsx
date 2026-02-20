@@ -8,7 +8,6 @@ export const useTestimonialStore = create((set, get) => ({
   loading: false,
   error: null,
 
-  // Fetch approved testimonials (public)
   fetchTestimonials: async () => {
     try {
       set({ loading: true, error: null });
@@ -26,7 +25,6 @@ export const useTestimonialStore = create((set, get) => ({
     }
   },
 
-  // Fetch user's own testimonials
   fetchMyTestimonials: async (accessToken) => {
     try {
       set({ loading: true, error: null });
@@ -48,7 +46,6 @@ export const useTestimonialStore = create((set, get) => ({
     }
   },
 
-  // Check if user can submit testimonial for an order
   canSubmitTestimonial: async (orderId, accessToken) => {
     try {
       const response = await fetch(`${SERVER_API}/testimonials/user/can-submit/${orderId}`, {
@@ -67,7 +64,6 @@ export const useTestimonialStore = create((set, get) => ({
     }
   },
 
-  // Create testimonial (customer)
   createTestimonial: async (testimonialData, accessToken) => {
     try {
       set({ loading: true, error: null });
@@ -92,7 +88,6 @@ export const useTestimonialStore = create((set, get) => ({
       const data = await response.json();
 
       if (response.ok && data.status === "success") {
-        // Add to my testimonials
         set((state) => ({
           myTestimonials: [data.data, ...state.myTestimonials],
           loading: false,
@@ -106,7 +101,6 @@ export const useTestimonialStore = create((set, get) => ({
     }
   },
 
-  // Delete own testimonial (customer)
   deleteTestimonial: async (testimonialId, accessToken) => {
     try {
       set({ loading: true, error: null });
@@ -121,7 +115,6 @@ export const useTestimonialStore = create((set, get) => ({
       const data = await response.json();
 
       if (response.ok && data.status === "success") {
-        // Remove from my testimonials and public testimonials
         set((state) => ({
           myTestimonials: state.myTestimonials.filter((t) => t._id !== testimonialId),
           testimonials: state.testimonials.filter((t) => t._id !== testimonialId),

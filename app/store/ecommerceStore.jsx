@@ -7,7 +7,6 @@ const TOKEN_REFRESH_INTERVAL = 50 * 60 * 1000;
 export const useEcommerceStore = create(
   persist(
     (set, get) => ({
-      // Auth State
       isAuth: false,
       userId: "",
       username: "",
@@ -22,21 +21,17 @@ export const useEcommerceStore = create(
       refreshTimeoutId: null,
       isInitialized: false,
 
-      // Cart State
       cart: null,
       cartLoading: false,
 
-      // Products State
       products: [],
       productsLoading: false,
       productsPagination: null,
 
-      // Orders State
       orders: [],
       ordersLoading: false,
       ordersPagination: null,
 
-      // Initialize Auth
       initializeAuth: async () => {
         const state = get();
         if (state.isInitialized) return;
@@ -60,13 +55,11 @@ export const useEcommerceStore = create(
 
         get().scheduleTokenRefresh();
         
-        // Load cart if authenticated
         if (state.emailVerified) {
           get().getCart();
         }
       },
 
-      // Auth Actions
       setUser: (userData) => {
         const tokenExpirationTime = Date.now() + 60 * 60 * 1000;
         set({
@@ -141,7 +134,6 @@ export const useEcommerceStore = create(
           const data = await response.json();
           if (data.status === "success") {
             set({ emailVerified: true });
-            // Load cart after email verification
             setTimeout(() => get().getCart(), 500);
             return { success: true, message: data.message };
           }
@@ -195,7 +187,6 @@ export const useEcommerceStore = create(
             const userWithTokens = { ...data.data.user, tokens: data.data.tokens };
             get().setUser(userWithTokens);
             
-            // Load cart after login
             setTimeout(() => get().getCart(), 500);
             
             return { success: true, message: data.message };
@@ -367,7 +358,6 @@ export const useEcommerceStore = create(
         }
       },
 
-      // Admin Actions
       makeAdmin: async (userId) => {
         try {
           const { accessToken } = get();
@@ -406,7 +396,6 @@ export const useEcommerceStore = create(
         }
       },
 
-      // Products Actions
       getAllProducts: async (filters = {}) => {
         try {
           set({ productsLoading: true });
@@ -524,7 +513,6 @@ export const useEcommerceStore = create(
         }
       },
 
-      // Cart Actions
       getCart: async () => {
         try {
           const { accessToken, emailVerified } = get();
@@ -632,7 +620,6 @@ export const useEcommerceStore = create(
         }
       },
 
-      // Order Actions
       createOrder: async (orderData) => {
         try {
           const { accessToken } = get();
@@ -734,7 +721,6 @@ export const useEcommerceStore = create(
         }
       },
 
-      // Admin Order Actions
       getAllOrdersAdmin: async (filters = {}) => {
         try {
           const { accessToken } = get();
@@ -775,7 +761,6 @@ export const useEcommerceStore = create(
         }
       },
 
-      // Utility Functions
       getCartItemCount: () => {
         const { cart } = get();
         if (!cart || !cart.items) return 0;

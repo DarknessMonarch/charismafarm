@@ -1,4 +1,3 @@
-// Cart Store - Remove localStorage persistence
 import { create } from "zustand";
 
 export const useCartStore = create((set, get) => ({
