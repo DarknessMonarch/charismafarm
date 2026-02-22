@@ -97,6 +97,8 @@ export const useEcommerceStore = create(
           phone: "",
           profileImage: "",
           isAdmin: false,
+          isDriver: false,
+          driverStatus: "offline",
           accessToken: "",
           refreshToken: "",
           emailVerified: false,
