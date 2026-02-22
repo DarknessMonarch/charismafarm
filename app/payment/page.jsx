@@ -240,15 +240,15 @@ export default function CheckoutPage() {
           const handler = window.PaystackPop.setup({
             key: PAYSTACK_PUBLIC_KEY,
             email: email,
-            amount: Math.round(result.data.order.totalAmount * 100),
+            amount: Math.round(result.data.totalAmount * 100),
             currency: "KES",
             ref: result.data.reference,
             callback: function (response) {
               router.push(`/payment/verify?reference=${response.reference}`);
             },
             onClose: function () {
-              toast.info("Payment cancelled. Your order has been saved.");
-              router.push(`/payment/pending?order=${result.data.order.orderNumber}`);
+              toast.info("Payment cancelled. You can try again.");
+              setSubmitting(false);
             },
           });
           handler.openIframe();

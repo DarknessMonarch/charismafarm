@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -34,9 +34,11 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("featured");
   const [testimonialIndex, setTestimonialIndex] = useState(0);
-  const [categoryIndex, setCategoryIndex] = useState(0);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
+  const [categoryScrollPos, setCategoryScrollPos] = useState(0);
+  const [categoryMaxScroll, setCategoryMaxScroll] = useState(0);
+  const categoryGridRef = useRef(null);
 
   const Features = [
     { id: 1, icon: ShippingIcon, title: "Free Delivery", description: "Free shipping on orders over Ksh 5000" },
@@ -160,19 +162,38 @@ export default function Home() {
     setTestimonialIndex((prev) => (prev - 1 + displayTestimonials.length) % displayTestimonials.length);
   };
 
-  const visibleCategories = displayCategories.slice(categoryIndex, categoryIndex + 5);
+  const SCROLL_AMOUNT = 320;
 
   const nextCategory = () => {
-    if (categoryIndex + 5 < displayCategories.length) {
-      setCategoryIndex((prev) => prev + 1);
+    if (categoryGridRef.current) {
+      categoryGridRef.current.scrollBy({ left: SCROLL_AMOUNT, behavior: "smooth" });
     }
   };
 
   const prevCategory = () => {
-    if (categoryIndex > 0) {
-      setCategoryIndex((prev) => prev - 1);
+    if (categoryGridRef.current) {
+      categoryGridRef.current.scrollBy({ left: -SCROLL_AMOUNT, behavior: "smooth" });
     }
   };
+
+  const handleCategoryGridScroll = () => {
+    if (categoryGridRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = categoryGridRef.current;
+      setCategoryScrollPos(scrollLeft);
+      setCategoryMaxScroll(scrollWidth - clientWidth);
+    }
+  };
+
+  useEffect(() => {
+    const grid = categoryGridRef.current;
+    if (!grid) return;
+    const update = () => {
+      setCategoryMaxScroll(grid.scrollWidth - grid.clientWidth);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [displayCategories]);
 
   return (
     <main className={styles.homeContainer}>
@@ -240,16 +261,25 @@ export default function Home() {
             <div className={styles.decorLine}></div>
           </div>
           <div className={styles.categorySlider}>
-            <button className={styles.sliderBtn} onClick={prevCategory} disabled={categoryIndex === 0}>
+            <button
+              className={styles.sliderBtn}
+              onClick={prevCategory}
+              disabled={categoryScrollPos <= 0}
+              aria-label="Previous categories"
+            >
               <IoChevronBack />
             </button>
-            <div className={styles.categoryGrid}>
+            <div
+              ref={categoryGridRef}
+              className={styles.categoryGrid}
+              onScroll={handleCategoryGridScroll}
+            >
               {loading ? (
                 Array(5).fill(0).map((_, i) => (
                   <div key={i} className={`${styles.categoryCard} skeleton`}></div>
                 ))
               ) : (
-                visibleCategories.map((category) => (
+                displayCategories.map((category) => (
                   <div key={category._id} className={styles.categoryCard} onClick={() => handleCategoryClick(category)}>
                     <div className={styles.categoryImageWrapper}>
                       {category.image ? (
@@ -269,7 +299,12 @@ export default function Home() {
                 ))
               )}
             </div>
-            <button className={styles.sliderBtn} onClick={nextCategory} disabled={categoryIndex + 5 >= displayCategories.length}>
+            <button
+              className={styles.sliderBtn}
+              onClick={nextCategory}
+              disabled={categoryScrollPos >= categoryMaxScroll}
+              aria-label="Next categories"
+            >
               <IoChevronForward />
             </button>
           </div>

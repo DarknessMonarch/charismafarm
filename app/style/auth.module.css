@@ -251,6 +251,35 @@
   .btnLoginContainer:hover {
     color: var(--primary-color);
   }
+
+  .authInputError {
+    border-color: var(--error-color);
+  }
+
+  .authInputError:focus-within {
+    border-color: var(--error-color);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  }
+
+  .inputErrorMsg {
+    font-size: var(--font-size-xs);
+    color: var(--error-color);
+    margin-top: -8px;
+    padding-left: 4px;
+  }
+
+  .formAuthButton.secondary {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1.5px solid var(--border-color);
+  }
+
+  .formAuthButton.secondary:hover:not(:disabled) {
+    background-color: var(--section-background);
+    border-color: var(--primary-color);
+    transform: none;
+    box-shadow: none;
+  }
 }
 
 /* Tablet & Small Laptop Screens */

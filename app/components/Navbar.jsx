@@ -37,6 +37,7 @@ import {
   MdLogout as LogoutIcon,
   MdLocalOffer as OfferIcon,
   MdCameraAlt as CameraIcon,
+  MdLocalShipping as TruckIcon,
 } from "react-icons/md";
 
 const MOBILE_BREAKPOINT = 768;
@@ -677,6 +678,8 @@ const RightSection = ({
   showHint,
   onMouseEnter,
   onMouseLeave,
+  isDriver,
+  isAdmin,
 }) => (
   <div className={styles.rightSection}>
     {!isMobile && (
@@ -700,8 +703,16 @@ const RightSection = ({
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
           />
-          <span>{username || "Guest"}</span>
+          <Link href="/account" className={styles.usernameLink}>
+            {username || "Account"}
+          </Link>
         </div>
+        {(isDriver || isAdmin) && (
+          <Link href="/delivery" className={styles.driverLink}>
+            <TruckIcon className={styles.driverLinkIcon} />
+            {!isMobile && <span>Driver</span>}
+          </Link>
+        )}
         <button
           onClick={onLogout}
           className={styles.logoutButton}
@@ -825,6 +836,8 @@ const NavbarContent = () => {
     isAuth,
     username,
     profileImage,
+    isDriver,
+    isAdmin,
     logout,
     clearUser,
     updateProfileImage,
@@ -971,6 +984,8 @@ const NavbarContent = () => {
                 showHint={showHint}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
+                isDriver={isDriver}
+                isAdmin={isAdmin}
               />
             )}
           </div>
@@ -1021,6 +1036,8 @@ const NavbarContent = () => {
                 showHint={showHint}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
+                isDriver={isDriver}
+                isAdmin={isAdmin}
               />
             )}
             <CartSection onCartClick={handleCartClick} />

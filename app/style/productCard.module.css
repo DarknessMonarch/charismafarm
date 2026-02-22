@@ -14,6 +14,7 @@
 
   .productCardContainer:hover {
     transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
   }
 
   .productCardImageWrapper {
@@ -31,6 +32,7 @@
   }
 
   .productCardImageWrapper:hover {
+    border-color: var(--secondary-color);
     background-color: var(--section-background);
   }
 

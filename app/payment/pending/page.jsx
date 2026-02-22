@@ -29,16 +29,14 @@ function PendingContent() {
       <div className={styles.card}>
         <div className={styles.loadingState}>
           <PendingIcon style={{ fontSize: "80px", color: "#ffc107" }} />
-          <h2>Payment Pending</h2>
-          <p>
-            Your order {orderNumber && <strong>#{orderNumber}</strong>} has been saved but payment was not completed.
-          </p>
-          <p>You can complete the payment or contact us for assistance.</p>
+          <h2>Payment Not Completed</h2>
+          <p>Your payment was not completed. No charge was made and no order was placed.</p>
+          <p>You can go back and try again, or contact us if you need help.</p>
         </div>
 
         <div className={styles.actions}>
-          <Link href="/orders" className={styles.primaryBtn}>
-            <PayIcon /> View Orders & Pay
+          <Link href="/payment" className={styles.primaryBtn}>
+            <PayIcon /> Try Again
           </Link>
           <button onClick={handleWhatsAppContact} className={styles.secondaryBtn} style={{ backgroundColor: "#25D366", color: "#fff" }}>
             <WhatsappIcon /> Contact Support

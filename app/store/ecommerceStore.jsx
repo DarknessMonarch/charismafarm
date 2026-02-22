@@ -14,6 +14,8 @@ export const useEcommerceStore = create(
       phone: "",
       profileImage: "",
       isAdmin: false,
+      isDriver: false,
+      driverStatus: "offline",
       accessToken: "",
       refreshToken: "",
       emailVerified: false,
@@ -70,6 +72,8 @@ export const useEcommerceStore = create(
           phone: userData.phone || "",
           profileImage: userData.profileImage || "",
           isAdmin: userData.isAdmin || false,
+          isDriver: userData.isDriver || false,
+          driverStatus: userData.driverStatus || "offline",
           emailVerified: userData.emailVerified || false,
           accessToken: userData.tokens.accessToken,
           refreshToken: userData.tokens.refreshToken,
@@ -761,6 +765,135 @@ export const useEcommerceStore = create(
         }
       },
 
+      // Driver functions
+      getDriverOrders: async (status) => {
+        try {
+          const { accessToken } = get();
+          const query = status ? `?status=${status}` : "";
+          const response = await fetch(`${SERVER_API}/orders/driver/assigned${query}`, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
+          const data = await response.json();
+          if (data.status === "success") return { success: true, data: data.data };
+          return { success: false, message: data.message };
+        } catch (error) {
+          return { success: false, message: "Failed to fetch driver orders" };
+        }
+      },
+
+      driverUpdateOrder: async (orderId, action, note) => {
+        try {
+          const { accessToken } = get();
+          const response = await fetch(`${SERVER_API}/orders/driver/${orderId}/update`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` },
+            body: JSON.stringify({ action, note }),
+          });
+          const data = await response.json();
+          if (data.status === "success") return { success: true, data: data.data };
+          return { success: false, message: data.message };
+        } catch (error) {
+          return { success: false, message: "Failed to update order" };
+        }
+      },
+
+      driverRespondOrder: async (orderId, action) => {
+        try {
+          const { accessToken } = get();
+          const response = await fetch(`${SERVER_API}/orders/driver/${orderId}/respond`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` },
+            body: JSON.stringify({ action }),
+          });
+          const data = await response.json();
+          if (data.status === "success") return { success: true, data: data.data };
+          return { success: false, message: data.message };
+        } catch (error) {
+          return { success: false, message: "Failed to respond to order" };
+        }
+      },
+
+      updateDriverStatus: async (driverStatus, vehicleInfo) => {
+        try {
+          const { accessToken } = get();
+          const response = await fetch(`${SERVER_API}/auth/driver-status`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` },
+            body: JSON.stringify({ driverStatus, vehicleInfo }),
+          });
+          const data = await response.json();
+          if (data.status === "success") {
+            set({ driverStatus: data.data.user.driverStatus });
+            return { success: true };
+          }
+          return { success: false, message: data.message };
+        } catch (error) {
+          return { success: false, message: "Failed to update status" };
+        }
+      },
+
+      assignDriver: async (orderId, driverId) => {
+        try {
+          const { accessToken } = get();
+          const response = await fetch(`${SERVER_API}/orders/admin/${orderId}/assign-driver`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` },
+            body: JSON.stringify({ driverId }),
+          });
+          const data = await response.json();
+          if (data.status === "success") return { success: true, data: data.data };
+          return { success: false, message: data.message };
+        } catch (error) {
+          return { success: false, message: "Failed to assign driver" };
+        }
+      },
+
+      getAvailableDrivers: async () => {
+        try {
+          const { accessToken } = get();
+          const response = await fetch(`${SERVER_API}/orders/admin/drivers`, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
+          const data = await response.json();
+          if (data.status === "success") return { success: true, data: data.data.drivers };
+          return { success: false, message: data.message };
+        } catch (error) {
+          return { success: false, message: "Failed to fetch drivers" };
+        }
+      },
+
+      makeDriver: async (userId) => {
+        try {
+          const { accessToken } = get();
+          const response = await fetch(`${SERVER_API}/auth/make-driver`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` },
+            body: JSON.stringify({ userId }),
+          });
+          const data = await response.json();
+          if (data.status === "success") return { success: true };
+          return { success: false, message: data.message };
+        } catch (error) {
+          return { success: false, message: "Failed to make driver" };
+        }
+      },
+
+      removeDriver: async (userId) => {
+        try {
+          const { accessToken } = get();
+          const response = await fetch(`${SERVER_API}/auth/remove-driver`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` },
+            body: JSON.stringify({ userId }),
+          });
+          const data = await response.json();
+          if (data.status === "success") return { success: true };
+          return { success: false, message: data.message };
+        } catch (error) {
+          return { success: false, message: "Failed to remove driver" };
+        }
+      },
+
       getCartItemCount: () => {
         const { cart } = get();
         if (!cart || !cart.items) return 0;
@@ -783,6 +916,8 @@ export const useEcommerceStore = create(
         phone: state.phone,
         profileImage: state.profileImage,
         isAdmin: state.isAdmin,
+        isDriver: state.isDriver,
+        driverStatus: state.driverStatus,
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
         emailVerified: state.emailVerified,
